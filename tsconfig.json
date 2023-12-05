@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@iconsGallery": ["./src/IconsGallery/index.ts", "./src/IconsGallery/*"],
+      "@componentLib": ["./src/Components/index.ts", "./src/Components/*"],
+      "@apiService": ["./src/apiServices/index.ts", "./src/apiServices/*"],
+      "@utils": ["./src/utils/index.ts", "./src/utils/*"],
+      "@constants": ["./src/Constants/index.ts", "./src/Constants/*"],
+      "@pageConfiguration": [
+        "./src/pageConfiguration/index.ts",
+        "./src/pageConfiguration/*"
+      ],
+      "@globalFixture": [
+        "./src/globalFixture/index.ts",
+        "./src/globalFixture/*"
+      ]
+    }
+  },
+  "include": ["src"]
+}

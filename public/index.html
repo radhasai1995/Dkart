@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>DigitKart</title>
+    <style>
+       @keyframes arrowIcon2 {
+        0% {
+          transform: translateY(300px);
+        }
+        50% {           
+          transform: translateY(308px);
+        }
+        100% {         
+          transform: translateY(300px);
+        }
+      }
+      @keyframes arrowIcon {
+        0% {
+          transform: translateX(0px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+      .cls-paybutton-button-icon {
+        animation: arrowIcon 700ms linear infinite;
+      }
+
+      #root {
+        transition: all 400ms ease;
+      }
+      #root.blur-kit {
+        filter: blur(10px);
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border: 2px solid transparent;
+        border-radius: 20px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        box-shadow: rgb(0 0 0 / 24%) 0px 0px 0px 20px inset;
+      }
+
+      .knapcart-loader-ui {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+      }
+
+      .lds-roller {
+        transform: scale(0.6);
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+      }
+
+      .lds-roller div {
+        animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        transform-origin: 40px 40px;
+      }
+
+      .lds-roller div:after {
+        content: " ";
+        display: block;
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        /* background: #01ABED; */
+        background: #df86bb;
+        margin: -4px 0 0 -4px;
+      }
+
+      .lds-roller div:nth-child(1) {
+        animation-delay: -0.036s;
+      }
+
+      .lds-roller div:nth-child(1):after {
+        top: 63px;
+        left: 63px;
+      }
+
+      .lds-roller div:nth-child(2) {
+        animation-delay: -0.072s;
+      }
+
+      .lds-roller div:nth-child(2):after {
+        top: 68px;
+        left: 56px;
+      }
+
+      .lds-roller div:nth-child(3) {
+        animation-delay: -0.108s;
+      }
+
+      .lds-roller div:nth-child(3):after {
+        top: 71px;
+        left: 48px;
+      }
+
+      .lds-roller div:nth-child(4) {
+        animation-delay: -0.144s;
+      }
+
+      .lds-roller div:nth-child(4):after {
+        top: 72px;
+        left: 40px;
+      }
+
+      .lds-roller div:nth-child(5) {
+        animation-delay: -0.18s;
+      }
+
+      .lds-roller div:nth-child(5):after {
+        top: 71px;
+        left: 32px;
+      }
+
+      .lds-roller div:nth-child(6) {
+        animation-delay: -0.216s;
+      }
+
+      .lds-roller div:nth-child(6):after {
+        top: 68px;
+        left: 24px;
+      }
+
+      .lds-roller div:nth-child(7) {
+        animation-delay: -0.252s;
+      }
+
+      .lds-roller div:nth-child(7):after {
+        top: 63px;
+        left: 17px;
+      }
+
+      .lds-roller div:nth-child(8) {
+        animation-delay: -0.288s;
+      }
+
+      .lds-roller div:nth-child(8):after {
+        top: 56px;
+        left: 12px;
+      }
+      .cls-dkph-reloadkit-icon {
+        animation: rotating 2s linear infinite;
+        animation-direction: reverse;
+        color: #aa457d;
+      }
+      .cls-dkph-refreshkit-icon {
+        color: #aa457d;
+      }
+      @keyframes lds-roller {
+        0% {
+          transform: rotate(0deg) scale(1.3);
+        }
+
+        100% {
+          transform: rotate(360deg) scale(1.3);
+        }
+      }
+      :root {
+        --primaryColor: #df86bb;
+        --secondaryColor: #280b2b;
+        --optionBgColor: #270a2b;
+        --primaryTextColor: #ffffff;
+        --secondaryTextColor: #ffffff;
+        --lightColor: #df86bb;
+        --black: #000000;
+        --white: #ffffff;
+        --darkColor: #140316;
+        --gray: #f9f9fc;
+        --darkGray: #828282;
+        --red: #db0e0e;
+        --darkPink: #dc1280;
+        --lightDarkPink: #cc5c9e;
+        --lightGray: #d3d3d3;
+        --blue: #505abc;
+        --darkBlue: #2d3796;
+        --lightRose: #d38bb9;
+        --fogWhite: #e6e6e6;
+        --darkShadePink: #b62a6e;
+        --grassGreen: #6bab5c;
+        --disableColor: #a8a8a8;
+      }
+    </style>
+    <script src="%PUBLIC_URL%/static/js/lib/jquery-2.1.4.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/jquery-ui.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/require.js"></script>
+  </head>
+
+  <body
+    bgcolor="#050505"
+    style="
+      background-image: url('%PUBLIC_URL%/static/img/bg.jpg');
+      background-repeat: no-repeat;
+      background-size: 110% 110%;
+      height: 100vh;
+    "
+  >
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://js.stripe.com/terminal/v1/sdk.js" async></script>
+    <div id="custom-snackbar"></div>
+    <div id="root">
+      <div>
+        <div class="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script>
+      window.addEventListener("beforeunload", function (e) {
+        if (!location.href.includes("localhost")) {
+          localStorage.clear();
+        }
+      });
+    </script>
+  </body>
+</html>
