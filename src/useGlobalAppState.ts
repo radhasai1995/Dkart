@@ -4,6 +4,7 @@ import * as Constants from "@constants";
 import * as Utils from "@utils";
 import * as ApiServices from "@apiService";
 
+const { ipcRenderer } = window.require("electron");
 const {
   DEFAULT_GATE_WAY_ERROR_MESSAGE,
   HEARTLAND_IP_REQUIRED,
@@ -80,6 +81,10 @@ function useGlobalAppState() {
   const [cancelablePayment, setCancelablePayment] = useState(false);
   let _initiateStripeTerminal: any = useRef(null);
 
+  ipcRenderer.on('update_available', () => {
+    setOpenAppUpdate(false)
+  });
+
   useEffect(() => {
     const reader = Object.keys(Utils.getStorage().reader).length;
     setConnectorReaderIntializeStatus(
@@ -89,7 +94,7 @@ function useGlobalAppState() {
   /**
    * @App_Update_States
    */
-  const [openAppUpdate, setOpenAppUpdate] = useState(true);
+  const [openAppUpdate, setOpenAppUpdate] = useState(false);
   const [isAppUpdateProgressModalOpen, setAppUpdateProgressModalOpen] =
     useState(false);
   const [isAppUpdateLaterModalOpen, setAppUpdateLaterModalOpen] =
