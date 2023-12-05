@@ -1,0 +1,150 @@
+{
+  "name": "digitkart",
+  "version": "0.1.0",
+  "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "author": {
+    "name": "bk"
+  },
+  "description": "DigitKart Kisok Device",
+  "dependencies": {
+    "@electron-forge/publisher-github": "^7.2.0",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/lab": "^5.0.0-alpha.135",
+    "@mui/material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/x-date-pickers": "^6.6.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/jquery": "2.0.47",
+    "@types/material-ui": "^0.21.8",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "axios": "^0.25.0",
+    "customize-cra": "^1.0.0",
+    "dayjs": "^1.11.8",
+    "electron-is-dev": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "emotion": "^9.2.12",
+    "https-browserify": "^1.0.0",
+    "i18next": "^22.5.0",
+    "jquery": "^3.7.0",
+    "lottie-react": "^2.4.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "mqtt": "^4.3.7",
+    "notistack": "^3.0.1",
+    "qs": "^6.11.2",
+    "react": "^18.2.0",
+    "react-apexcharts": "^1.3.9",
+    "react-app-rewired": "2.1.8",
+    "react-barcode-reader": "^0.0.2",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.3.1",
+    "react-router-dom": "^6.11.1",
+    "react-scripts": "5.0.1",
+    "swr": "^1.2.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@types/lodash": "^4.14.195",
+    "concurrently": "^7.0.0",
+    "electron": "11.2.0",
+    "wait-on": "^6.0.0"
+  },
+  "config": {
+    "forge": {
+      "electronPackagerConfig": {
+        "icon": "assets/icon.ico"
+      },
+      "packagerConfig": {
+        "icon": "assets/icon.png"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "DigitKart"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "name": "DigitKart",
+            "options": {
+              "icon": "assets/icon.png"
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "name": "DigitKart",
+            "format": "ULFO"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
+    "app": "concurrently -k \"set BROWSER=none && yarn start\" \"yarn:electron\"",
+    "electron": "wait-on tcp:3000 && electron .",
+    "package": "react-app-rewired build && electron-forge package",
+    "make-mac": "react-app-rewired build && electron-forge make --platform darwin",
+    "make-linux": "react-app-rewired build && electron-forge make --platform linux",
+    "make": "react-app-rewired build && electron-forge make",
+    "publish": "react-app-rewired build && electron-forge publish"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repositry": "",
+  "publish": {
+    "provider": "github",
+    "realeaseType": "realease"
+  }
+}
