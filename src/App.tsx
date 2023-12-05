@@ -60,7 +60,8 @@ function App() {
     onCloseDatePicker = () => "",
     onSubmitDatePickerValue = () => "",
     isAuthenticated = false,
-    setOpenWarningScan
+    setOpenWarningScan,
+    downloadProgress = 0
   } = stateGlobalAppState as any;
   const changeLanguage = (lng: any) => {
     i18n.changeLanguage(lng);
@@ -130,7 +131,7 @@ const connectReaderModalProps = {
     confirmText: "Cancel",
     confirmLoaderText: "Loading...",
     onHandleUpdateNow,
-
+    progress: downloadProgress,
   };
   const appUpdateLaterProps = {
     isOpen: isAppUpdateLaterModalOpen,

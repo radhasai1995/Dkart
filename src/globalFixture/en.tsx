@@ -191,7 +191,7 @@ export const TOTAL_CONTENTS = {
   LOGIN_TRAINING: "Terminal Application___Training Module - Read",
   LOGIN_CREATE_USER: "Terminal Application___Store Associate - Read",
   LOGIN_RESET_PIN: "Terminal Application___Reset Pin - Read",
-  LOGIN_VERSION: "dev v0.0.1",
+  LOGIN_VERSION: "dev v0.1.2",
   LOGIN_ERROR_MSG: "Admin ID / PIN can't be empty",
   LOGIN_API_FAIL_ERROR_MSG: "Unable to login!",
   USER_VERIFY_API_FAIL_MSG: "Unable to verify user!",

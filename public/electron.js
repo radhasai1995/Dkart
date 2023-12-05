@@ -1,11 +1,17 @@
 const path = require("path");
+const fs = require("fs");
+
 const pkg = require("../package.json");
 const { app, BrowserWindow } = require("electron");
+const { log } = require('electron-log');
 const isDev = require("electron-is-dev");
 const { default: axios } = require("axios");
+const { spawnSync } = require("child_process");
+const { ipcMain } = require("electron");
 
 let newVersion = false;
 let downloadUrl;
+let mainWindow;
 
 function updateChecker() {
   if(newVersion) {
@@ -13,11 +19,11 @@ function updateChecker() {
     return;
   }
 
- axios(pkg.repositryApi, {
+ axios(pkg.repositoryApi, {
     headers: {
-      Authorization: `Bearer ${process.env.REACT_APP_GH_TOKEN}`
+      Authorization: `Bearer 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`
     }
-  }).then((res) => {
+  }).then(res => res.data).then((res) => {
     const tagName = res.name;
     const tagVersion = tagName.replace('v', "");
 
@@ -50,10 +56,76 @@ function updateChecker() {
     }
   })
 }
+function spawnSyncLog(cmd, args = [], env = {}) {
+  log(`Executing: ${cmd} with args: ${args}`)
+  const response = spawnSync(cmd, args, {
+    env: { ...process.env, ...env },
+    encoding: "utf-8",
+    shell: true,
+  })
+  return response.stdout.trim()
+}
+
+function wrapSudo() {
+  const name = pkg.name;
+  const installComment = `${name} would like to update`
+  const sudo = spawnSyncLog("which gksudo || which kdesudo || which pkexec || which beesu")
+  const command = [sudo]
+  if (/kdesudo/i.test(sudo)) {
+    command.push("--comment", installComment)
+    command.push("-c")
+  } else if (/gksudo/i.test(sudo)) {
+    command.push("--message", installComment)
+  } else if (/pkexec/i.test(sudo)) {
+    command.push("--disable-internal-agent")
+  }
+  return command.join(" ")
+}
+
+ipcMain.on('downloadNInstall', async (event, message) => {
+  console.log('=dfdfdf==', downloadUrl)
+  const tempDir = app.getPath('temp'); // Get the system's temporary directory
+  const tempFilePath = path.join(tempDir, 'elec_latest.deb'); // Create a unique file path
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: downloadUrl,
+      responseType: 'stream',
+      onDownloadProgress: (progressEvent) => {
+        const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+        log(`Progress ${progress} of 100%`)
+        event.sender.send('download-progress', progress);
+      }
+    });
+
+    const writer = fs.createWriteStream(tempFilePath);
+    response.data.pipe(writer);
+
+    writer.on('finish', () => {
+      event.sender.send('download-complete', tempFilePath);
+
+      event.sender.send('update_downloaded')
+      app.quit();
+      doInstall(tempFilePath)
+    });
+
+  } catch (error) {
+    event.sender.send('download-error', error.message);
+  }
+});
+
+function doInstall(installerPath) {
+  const sudo = wrapSudo()
+    // pkexec doesn't want the command to be wrapped in " quotes
+  const wrapper = /pkexec/i.test(sudo) ? "" : `"`
+  const cmd = ["dpkg", "-i", installerPath, "||", "apt-get", "install", "-f", "-y"]
+  spawnSyncLog(sudo, [`${wrapper}/bin/bash, "-c", '${cmd.join(" ")}'${wrapper}`])
+  return true
+}
 
 function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 700,
     backgroundColor: "#050505",
@@ -64,17 +136,17 @@ function createWindow() {
     frame: false,
   });
 
-  win.maximize();
+  // mainWindow.maximize();
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  win.loadURL(
+  mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
   // Open the DevTools.
   if (isDev) {
-    win.webContents.openDevTools({ mode: "detach" });
+    mainWindow.webContents.openDevTools({ mode: "detach" });
   }
 }
 
@@ -85,7 +157,7 @@ app.whenReady().then(createWindow);
 app.on('ready', () => {
   setInterval(() => {
     updateChecker();
-  }, 10 * 1000)
+  }, 30 * 1000)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -1,6 +1,6 @@
 {
   "name": "digitkart",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -108,6 +108,21 @@
             "win32"
           ]
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "authors": "Radha Krishna",
+            "description": "Digital Kart terminal app",
+              "repository": {
+                "owner": "radhasai1995",
+                "name": "Dkart"
+              },
+            "prerelease": false,
+            "draft": false
+          }
+        }
       ]
     }
   },
@@ -143,8 +158,8 @@
       "last 1 safari version"
     ]
   },
-  "repositry": "https://github.com/radhasai1995/Dkart",
-  "repositryApi": "https://api.github.com/repos/radhasai1995/Dkart/realeases/latest",
+  "repository": "https://github.com/radhasai1995/Dkart",
+  "repositoryApi": "https://api.github.com/repos/radhasai1995/Dkart/releases/latest",
   "publish": {
     "provider": "github",
     "realeaseType": "realease"

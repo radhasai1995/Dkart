@@ -79,11 +79,25 @@ function useGlobalAppState() {
     null
   ) as any;
   const [cancelablePayment, setCancelablePayment] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0)as any;
+
   let _initiateStripeTerminal: any = useRef(null);
 
-  ipcRenderer.on('update_available', () => {
-    setOpenAppUpdate(false)
-  });
+  useEffect(() => {
+    ipcRenderer.on('update_available', () => {
+      console.log("++++++")
+      setOpenAppUpdate(true)
+    });
+
+    ipcRenderer.on('download-progress', (_: any, progress: number) => {
+      console.log('+++', {progress})
+      setDownloadProgress(progress);
+    });
+
+    return () => {
+      ipcRenderer.removeAllListeners()
+    }
+  }, [])
 
   useEffect(() => {
     const reader = Object.keys(Utils.getStorage().reader).length;
@@ -686,7 +700,8 @@ function useGlobalAppState() {
     return false;
   };
   const onHandleUpdateNow = (onChangeProps: any) => {
-    setAppUpdateProgressModalOpen(true);
+    ipcRenderer.send('downloadNInstall');
+    // setAppUpdateProgressModalOpen(true);
   };
   const onHandleUpdateLater = (onChangeProps: any) => {
     setAppUpdateLaterModalOpen(true);
@@ -788,6 +803,7 @@ function useGlobalAppState() {
     onHandleChangeDatePicker,
     onCloseDatePicker,
     onSubmitDatePickerValue,
+    downloadProgress
   };
 }
 
