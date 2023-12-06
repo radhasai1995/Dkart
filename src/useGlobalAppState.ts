@@ -699,9 +699,13 @@ function useGlobalAppState() {
     }
     return false;
   };
+  const onCancelUpdateNow = () => {
+    ipcRenderer.send('cancel-update');
+    setAppUpdateProgressModalOpen(false)
+  }
   const onHandleUpdateNow = (onChangeProps: any) => {
     ipcRenderer.send('downloadNInstall');
-    // setAppUpdateProgressModalOpen(true);
+    setAppUpdateProgressModalOpen(true);
   };
   const onHandleUpdateLater = (onChangeProps: any) => {
     setAppUpdateLaterModalOpen(true);
@@ -803,7 +807,8 @@ function useGlobalAppState() {
     onHandleChangeDatePicker,
     onCloseDatePicker,
     onSubmitDatePickerValue,
-    downloadProgress
+    downloadProgress,
+    onCancelUpdateNow
   };
 }
 

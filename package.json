@@ -5,7 +5,7 @@
   "main": "public/electron.js",
   "homepage": "./",
   "author": {
-    "name": "bk"
+    "name": "RadhaKrishna Dodla"
   },
   "description": "DigitKart Kisok Device",
   "dependencies": {
@@ -26,7 +26,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "axios": "^0.25.0",
+    "axios": "^1.6.2",
     "customize-cra": "^1.0.0",
     "dayjs": "^1.11.8",
     "electron-is-dev": "^2.0.0",
@@ -99,14 +99,6 @@
             "name": "DigitKart",
             "format": "ULFO"
           }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin",
-            "linux",
-            "win32"
-          ]
         }
       ],
       "publishers": [
@@ -115,10 +107,10 @@
           "config": {
             "authors": "Radha Krishna",
             "description": "Digital Kart terminal app",
-              "repository": {
-                "owner": "radhasai1995",
-                "name": "Dkart"
-              },
+            "repository": {
+              "owner": "radhasai1995",
+              "name": "Dkart"
+            },
             "prerelease": false,
             "draft": false
           }

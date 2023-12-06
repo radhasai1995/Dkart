@@ -5,9 +5,11 @@ const pkg = require("../package.json");
 const { app, BrowserWindow } = require("electron");
 const { log } = require('electron-log');
 const isDev = require("electron-is-dev");
-const { default: axios } = require("axios");
+const axios = require("axios");
 const { spawnSync } = require("child_process");
 const { ipcMain } = require("electron");
+const { event } = require("jquery");
+const source = axios.CancelToken.source();
 
 let newVersion = false;
 let downloadUrl;
@@ -21,8 +23,8 @@ function updateChecker() {
 
  axios(pkg.repositoryApi, {
     headers: {
-      Authorization: `Bearer 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`
-    }
+      Authorization: `Bearer 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`
+    },
   }).then(res => res.data).then((res) => {
     const tagName = res.name;
     const tagVersion = tagName.replace('v', "");
@@ -68,7 +70,7 @@ function spawnSyncLog(cmd, args = [], env = {}) {
 
 function wrapSudo() {
   const name = pkg.name;
-  const installComment = `${name} would like to update`
+  const installComment = `"${name} would like to update"`
   const sudo = spawnSyncLog("which gksudo || which kdesudo || which pkexec || which beesu")
   const command = [sudo]
   if (/kdesudo/i.test(sudo)) {
@@ -82,17 +84,25 @@ function wrapSudo() {
   return command.join(" ")
 }
 
+ipcMain.on('cancel-update', (event, message) => {
+  console.log("Cancel")
+  source.cancel();
+})
+
 ipcMain.on('downloadNInstall', async (event, message) => {
-  console.log('=dfdfdf==', downloadUrl)
   const tempDir = app.getPath('temp'); // Get the system's temporary directory
   const tempFilePath = path.join(tempDir, 'elec_latest.deb'); // Create a unique file path
   try {
     const response = await axios({
       method: 'GET',
       url: downloadUrl,
+      headers: {
+        Authorization: `Bearer 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`
+      },
       responseType: 'stream',
+      cancelToken: source.token,
       onDownloadProgress: (progressEvent) => {
-        const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+        const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100) * 0.9;
         log(`Progress ${progress} of 100%`)
         event.sender.send('download-progress', progress);
       }
@@ -107,6 +117,7 @@ ipcMain.on('downloadNInstall', async (event, message) => {
       event.sender.send('update_downloaded')
       app.quit();
       doInstall(tempFilePath)
+      app.relaunch();
     });
 
   } catch (error) {
@@ -115,11 +126,14 @@ ipcMain.on('downloadNInstall', async (event, message) => {
 });
 
 function doInstall(installerPath) {
+  mainWindow.webContents.send('download-progress', 93);
   const sudo = wrapSudo()
     // pkexec doesn't want the command to be wrapped in " quotes
   const wrapper = /pkexec/i.test(sudo) ? "" : `"`
   const cmd = ["dpkg", "-i", installerPath, "||", "apt-get", "install", "-f", "-y"]
-  spawnSyncLog(sudo, [`${wrapper}/bin/bash, "-c", '${cmd.join(" ")}'${wrapper}`])
+  mainWindow.webContents.send('download-progress', 95);
+  spawnSyncLog(sudo, [`${wrapper}/bin/bash`, "-c", `'${cmd.join(" ")}'${wrapper}`])
+  mainWindow.webContents.send('download-progress', 100);
   return true
 }
 
@@ -157,7 +171,7 @@ app.whenReady().then(createWindow);
 app.on('ready', () => {
   setInterval(() => {
     updateChecker();
-  }, 30 * 1000)
+  }, 20 * 1000)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

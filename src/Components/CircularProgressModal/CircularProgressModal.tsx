@@ -69,6 +69,7 @@ const CircularProgressModal = (props: any) => {
                                 color: "var(--darkPink)",
                                 marginRight: 10,
                             }}
+                            disabled={progress > 93}
                             onClick={() => { onClose() }}
                         >
                             <Styles.StyledTypography variant="h6" >

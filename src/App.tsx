@@ -61,7 +61,8 @@ function App() {
     onSubmitDatePickerValue = () => "",
     isAuthenticated = false,
     setOpenWarningScan,
-    downloadProgress = 0
+    downloadProgress = 0,
+    onCancelUpdateNow = () => {},
   } = stateGlobalAppState as any;
   const changeLanguage = (lng: any) => {
     i18n.changeLanguage(lng);
@@ -124,10 +125,7 @@ const connectReaderModalProps = {
   };
   const appUpdateNowProps = {
     isOpen: isAppUpdateProgressModalOpen,
-    onCancelAppUpdate: (props: any) => {
-      setAppUpdateProgressModalOpen(false);
-      //setOpenAppUpdate(false);
-    },
+    onCancelAppUpdate: onCancelUpdateNow,
     confirmText: "Cancel",
     confirmLoaderText: "Loading...",
     onHandleUpdateNow,
