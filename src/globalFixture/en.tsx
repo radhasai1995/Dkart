@@ -182,7 +182,7 @@ export const TOTAL_CONTENTS = {
   /**
    * @Login Table Header Labels
    */
-  LOGIN_HEADER: "Login to your account test V0.1.4",
+  LOGIN_HEADER: "Login to your account test V0.1.5",
   LOGIN_SUBHEADER: "Sign in with your Admin ID and PIN",
   LOGIN_BUTTON_TEXT: "Log in",
   LOGIN_BUTTON_TEXT_LOADING: "Loading...",
@@ -191,7 +191,7 @@ export const TOTAL_CONTENTS = {
   LOGIN_TRAINING: "Terminal Application___Training Module - Read",
   LOGIN_CREATE_USER: "Terminal Application___Store Associate - Read",
   LOGIN_RESET_PIN: "Terminal Application___Reset Pin - Read",
-  LOGIN_VERSION: "dev v0.1.4",
+  LOGIN_VERSION: "dev v0.1.5",
   LOGIN_ERROR_MSG: "Admin ID / PIN can't be empty",
   LOGIN_API_FAIL_ERROR_MSG: "Unable to login!",
   USER_VERIFY_API_FAIL_MSG: "Unable to verify user!",
