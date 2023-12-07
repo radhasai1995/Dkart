@@ -12,6 +12,7 @@ const { event } = require("jquery");
 const source = axios.CancelToken.source();
 
 let newVersion = false;
+let latestVersion;
 let downloadUrl;
 let mainWindow;
 
@@ -23,7 +24,7 @@ function updateChecker() {
 
  axios(pkg.repositoryApi, {
     headers: {
-      Authorization: `Bearer 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`
+      Authorization: `Bearer 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`
     },
   }).then(res => res.data).then((res) => {
     const tagName = res.name;
@@ -35,8 +36,9 @@ function updateChecker() {
       const tagVersions = tagVersion.split(".");      
 
       for(let i = 0; i < pkgVersions.length; i++) {
-        if(tagVersions[i] > pkgVersions[i]) {
+        if(Number(tagVersions[i]) > Number(pkgVersions[i])) {
           newVersion = true
+          latestVersion = tagVersion
           break;
         }
       }
@@ -85,19 +87,22 @@ function wrapSudo() {
 }
 
 ipcMain.on('cancel-update', (event, message) => {
-  console.log("Cancel")
+  log('Cancelling install')
+  newVersion = false;
+  latestVersion = null;
+  downloadUrl = false;
   source.cancel();
 })
 
 ipcMain.on('downloadNInstall', async (event, message) => {
   const tempDir = app.getPath('temp'); // Get the system's temporary directory
-  const tempFilePath = path.join(tempDir, 'elec_latest.deb'); // Create a unique file path
+  const tempFilePath = path.join(tempDir, `elec_latest_${latestVersion}.deb`); // Create a unique file path
   try {
     const response = await axios({
       method: 'GET',
       url: downloadUrl,
       headers: {
-        Authorization: `Bearer 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`
+        Authorization: `Bearer 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`
       },
       responseType: 'stream',
       cancelToken: source.token,
@@ -118,6 +123,9 @@ ipcMain.on('downloadNInstall', async (event, message) => {
       app.quit();
       doInstall(tempFilePath)
       app.relaunch();
+      newVersion = false;
+      latestVersion = null;
+
     });
 
   } catch (error) {
