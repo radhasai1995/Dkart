@@ -119,7 +119,7 @@ const connectReaderModalProps = {
     isOpen: ageRestrictChecked
   };
   const appUpdateProps = {
-    isOpen: openAppUpdate,
+    isOpen: true,
     onHandleUpdateNow,
     onHandleUpdateLater,
   };

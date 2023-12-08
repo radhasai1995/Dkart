@@ -223,7 +223,7 @@ export const CloseIcon = (props: any) => {
   return (
     <Tooltip title="Close">
       <IconButton {...props}>
-        <img alt="close" src={CLOSE_BUTTON_IMG} width={40} />
+        <img alt="close" src={CLOSE_BUTTON_IMG} width={props.width || 40} />
       </IconButton>
     </Tooltip>
   );

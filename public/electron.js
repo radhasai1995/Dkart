@@ -24,7 +24,7 @@ function updateChecker() {
 
  axios(pkg.repositoryApi, {
     headers: {
-      Authorization: `Bearer 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`
+      Authorization: `Bearer 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`
     },
   }).then(res => res.data).then((res) => {
     const tagName = res.name;
@@ -102,7 +102,7 @@ ipcMain.on('downloadNInstall', async (event, message) => {
       method: 'GET',
       url: downloadUrl,
       headers: {
-        Authorization: `Bearer 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`
+        Authorization: `Bearer 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`
       },
       responseType: 'stream',
       cancelToken: source.token,

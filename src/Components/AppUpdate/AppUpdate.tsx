@@ -2,6 +2,7 @@ import React from "react";
 import { Paper } from "@mui/material";
 import * as IconGallery from "@iconsGallery";
 import * as Styles from "./styles";
+import IconButton from "@mui/material/IconButton";
 
 const AppUpdate = (props: any) => {
     const {
@@ -40,7 +41,15 @@ const AppUpdate = (props: any) => {
                         </Styles.StyledWrapper>
                         <Styles.StyledWrapper className="cls-dkph-flex-end">
                             <Styles.StyledButton onClick={onHandleUpdateNow} variant="contained" className="cls-dkph-update-now">{`Now`}</Styles.StyledButton>
-                            <Styles.StyledButton onClick={onHandleUpdateLater} variant="contained" className="cls-dkph-update-later">{`later`}</Styles.StyledButton>
+                            {/* <Styles.StyledButton onClick={onHandleUpdateLater} variant="contained" className="cls-dkph-update-later">{`later`}</Styles.StyledButton> */}
+                            {/* <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={() => {}}
+                                aria-label="close"
+                            >
+                                <IconGallery.CloseIcon width={20}/>
+                            </IconButton> */}
                         </Styles.StyledWrapper>
                     </Styles.StyledBoxWrapper>
                 </Paper>
