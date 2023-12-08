@@ -1,6 +1,6 @@
 {
   "name": "digitkart",
-  "version": "0.1.10",
+  "version": "0.1.21",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
